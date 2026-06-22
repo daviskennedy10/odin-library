@@ -16,7 +16,7 @@ function addBookToLibrary(name, date, size){
 
 
 function displayBooks(){
-    const container = document.querySelector("body")
+    const container = document.querySelector(".library-container")
     container.innerHTML = ""
 
     for(let i = 0; i < myLibrary.length; i++){
@@ -38,3 +38,22 @@ myLibrary.push(bookC)
 myLibrary.push(bookD)
 myLibrary.push(bookE)
 displayBooks()
+
+const button = document.querySelector(".new-book")
+const dialog = document.querySelector("#book-dialog")
+button.addEventListener("click", ()=>{
+    dialog.showModal()
+})
+
+const form = document.querySelector("form")
+form.addEventListener("submit", (event)=>{
+    event.preventDefault()
+    const name = document.querySelector("#book-name").value
+    const date = document.querySelector("#book-date").value
+    const size = document.querySelector("#book-size").value
+    let put = new Book(name, date, size)
+    myLibrary.push(put)
+    displayBooks()
+    dialog.close()
+
+})
