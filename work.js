@@ -1,17 +1,19 @@
 let myLibrary = []
 
 
-function Book(name, date, size){
+function Book(name, date, size, read){
     this.name = name
     this.id = crypto.randomUUID()
     this.date = date
     this.size = size
-
-
+    this.read = read
 }
 
-function addBookToLibrary(name, date, size){
-    let book = new Book(name, date, size)
+Book.prototype.toggleReadStatus = function(){
+    this.read = !this.read
+}
+function addBookToLibrary(name, date, size, read){
+    let book = new Book(name, date, size, read)
     myLibrary.push(book)
 }
 
@@ -35,12 +37,26 @@ function displayBooks(){
             myLibrary = myLibrary.filter(item => item.id != book.id)
             displayBooks()
         })
+
+        //Attach read status button
+        const readalready = document.createElement("button")
+        readalready.classList.add("read-status")
+        if (book.read !== true) {
+            readalready.innerHTML = "Not Read"
+        }
+        else{
+            readalready.innerHTML = "Read"
+        }
+
+        readalready.addEventListener("click", ()=>{
+            book.toggleReadStatus()
+            displayBooks()
+        })
+        bookcard.appendChild(readalready)
         bookcard.appendChild(remove)
         container.appendChild(bookcard)
     }
 }
-
-
 
 let bookA = new Book("othello", 2002, "big")
 let bookB = new Book("Romeo", 2005, "small")
