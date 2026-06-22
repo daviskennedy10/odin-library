@@ -1,4 +1,5 @@
-const myLibrary = []
+let myLibrary = []
+
 
 function Book(name, date, size){
     this.name = name
@@ -23,9 +24,23 @@ function displayBooks(){
         const book = myLibrary[i]
         const bookcard = document.createElement("div")
         bookcard.innerHTML = `<h3>${book.name} </h3> <p>${book.date}</p><p>${book.size}</p><small>ID: ${book.id}</small>`
+        const remove = document.createElement("button")
+        remove.classList.add("remove-card")
+        remove.innerHTML = `Remove ${book.name}`
+        
+        // Attach the unique ID to the HTML element!
+        bookcard.dataset.bookId = book.id
+        remove.addEventListener("click", ()=>{
+            /**div remove the parent of the button */
+            myLibrary = myLibrary.filter(item => item.id != book.id)
+            displayBooks()
+        })
+        bookcard.appendChild(remove)
         container.appendChild(bookcard)
     }
 }
+
+
 
 let bookA = new Book("othello", 2002, "big")
 let bookB = new Book("Romeo", 2005, "small")
